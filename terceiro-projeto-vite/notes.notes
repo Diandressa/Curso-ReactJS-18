@@ -1,0 +1,373 @@
+-- aula 48 usando o Inline Style --
+
+    cria  a pasta components
+    cria dentro da pasta o arquivo Card.tsx
+        import { CSSProperties } from "react"
+
+        export const Card = () => {
+            //tenho  que especificar que essa const é um CSS property, importar do proprio React
+            const container: CSSProperties = {
+                backgroundColor: "white", 
+                border: "1px solid red", 
+                width: "400px", 
+                height: "400px", 
+                color: "green",
+                padding: "30px"
+            }
+            return (
+                //CSS inline
+
+                //mando style como uma prop e envio um objeto
+                //esse objeto deve ter propriedades css em camelcase
+                <div style={container}>
+                    ...
+                </div>
+            )
+        }
+
+    import o component no App.tsx
+
+        import { Card } from "./components/Card";
+
+        const App = () => {
+        return(
+            <Card/>
+        )
+        }
+
+        export default App;
+
+-- aula 49 como organizar o Inline Style --
+
+    em App.tsx
+        import { Card } from "./components/Card";
+
+        const App = () => {
+        return(
+            <Card/>
+        )
+        }
+
+        export default App;
+
+    
+    cria uma pasta Card dentro de components
+    dentro da pasta cria o index.tsx e o style.tsx
+    
+    em index.tsx
+
+        import styles from "./style";
+
+        export const Card = () => {
+            return (
+                <div style={styles.container}>
+                    ...
+                </div>
+            )
+        }
+
+    em style.ts
+
+        import { CSSProperties } from "react";
+
+        //export container para usar na index.tsx
+        /*
+        export const container: CSSProperties = {
+            backgroundColor: "white", 
+            border: "1px solid red", 
+            width: "400px", 
+            height: "400px", 
+            color: "green",
+            padding: "30px"
+        }
+        */
+
+        //exportar como default - defino o nome stules quando importar no index.tsx
+
+        //objectos com o estilo
+        const container: CSSProperties = {
+            backgroundColor: "white", 
+            border: "1px solid red", 
+            width: "400px", 
+            height: "400px", 
+            color: "green",
+            padding: "30px"
+        }
+
+        export default {
+            container
+        }
+
+-- aula 50 importando folha de estilo separadamente --
+
+    no  app.tsx
+        import { Card } from "./components/Card";
+
+        const App = () => {
+        return(
+            <Card/>
+        )
+        }
+
+        export default App;
+
+    no index.tsx dentro da pasta components/Card
+        import './Card.css';
+
+        export const Card = () => {
+            return (
+                /*
+                <div className='container'>
+                    ...
+                </div>
+                */
+            <div id='container'>
+                    ...
+            </div>
+            )
+        }
+
+    no Card.css dentro de components/Card
+
+        #container{
+            background-color: white;
+            border: 1px solid red;
+            width: 400px;
+            height: 400px;
+            padding: 30px;
+            color: green;
+        }
+-- aula 51 usando o css modules --
+
+    Em component/Card cria os arquivos Card.module.css e o index.tsx
+
+    em Card.module.css
+
+        #container{
+            background-color: white;
+            border: 1px solid red;
+            width: 400px;
+            height: 400px;
+            padding: 30px;
+            color: green;
+        }
+
+    em index.tsx 
+
+        import { Cardtitle } from '../Cardtitle';
+        import styles from './Card.module.css';
+
+        export const Card = () => {
+            //CSS como um obj js - importorto com o nome que vou usar na div, styles
+            return (
+            <div id={styles.container}>
+                    <Cardtitle />
+            </div>
+            )
+        }
+
+    Cria outra paste em components chamada Cardtitle
+    Em Cardtitle cria o Cardtitle.module.css e o index.tsx
+
+    Em Cardtitle.module.css
+        #container{
+            background-color: brown;
+            color: white;
+            padding: 30px;
+        }
+
+    Em index.tsx
+        import styles from './Cardtitle.module.css';
+
+        export const Cardtitle = () => {
+            return(
+                //posso usar o mesmo id no html usando modules, pq ele cria um token para cada nome dado para o id ou class no DOM, ver no navegador
+                //o nome de container fica: _container_obqxs_1 , ou seja, gera um nome aleatorio
+                <div id={styles.container}>
+                    Meu título!
+                </div>
+            )
+        }
+
+-- aula 52 styled components criando o primeiro componente estilizado --
+
+    no terminal instalar a biblioteca styled component
+    comando
+    npm i styled components
+
+    instalar extenção no vscode: vscode-styled-components
+    para trazer a sintaxe e autocomplete no css do componente
+
+    Cria uma pasta components e dentro dela Card
+    Em Card cria dois arquivos:
+
+        index.tsx
+            //exportamos esse componente para o App.tsx
+            /*
+            const Card = styled.div`
+            background-color: white;
+            width: 400px;
+            height: 400px;
+            padding: 30px;
+            color: blue;
+
+            `
+                podemos colocar esse componente em um arquivo separado chamado style.ts
+            */
+
+            //importa o Card (que é um componente) que esta em styles
+
+            import { Card } from './styles';
+
+            export default () => {
+                //exporta padrão esse card apar o App.tsx, inseri ele no App.tsx
+                return(
+                    <Card>
+                        ...
+                    </Card>
+                )
+            }
+
+        style.ts
+            //arquivo style.ts, o ts é pq não retorna nenhum elemento jsx - javascript XML
+            import styled from 'styled-components'
+
+            export const Card = styled.div`
+            background-color: white;
+            width: 400px;
+            height: 400px;
+            padding: 30px;
+            color: blue;
+            `
+
+    no App.tsx
+
+        /*
+        //criamos um componente já com o estilo dele
+        const Card = styled.div`
+        background-color: white;
+        width: 400px;
+        height: 400px;
+        padding: 30px;
+        color: blue;
+        `
+        Para organizar o codigo podemos criar um arquivo index.tsc e colocar esse componente lá
+
+        */
+
+        import Card from "./components/Card";
+
+        const App = () => {
+        //importa o Card.tsx do component e usa na aplicaçao
+        return(
+            <Card/>
+        )
+        }
+
+        export default App;
+
+        //resumo: criamos um arquivo de css com o componente que exporta para Card.tsx
+        //Card.tsx exporta default - que vai para App.tsx
+        //Em App.tsx importamos o Card da pasta components 
+
+
+-- aula 53 styled components passando props --
+    no index.tsx
+        import { Card, Title } from './styles';
+
+        export default () => {
+            return(
+                //$color, o cifrao faz nao aparecer no DOM, podemos ver no navegador.
+                //Entende que é um estilo css
+                <Card>
+                    <Title $color='black' $background='hotpink'>Meu texto qualquer!</Title>
+                </Card>
+            )
+        }
+    
+    no styles.ts
+        import styled from 'styled-components'
+
+        export const Card = styled.div`
+        background-color: white;
+        width: 400px;
+        height: 400px;
+        padding: 30px;
+        color: blue;
+        `
+        //usando interrogação dizemos que não é opcional informar esse valor no componente
+        export const Title = styled.span<{ $color:string, $background?:string }>`
+        font-size: 19px;
+        font-weight: 800;
+        color: ${props => props.$color};
+        background: ${props => props.$background};
+        `
+
+-- aula 54 styled components objetos de estilo --
+    no style.ts 
+        import { FunctionComponent, ReactNode } from 'react'
+        import styled from 'styled-components'
+        /*
+        export const Card = styled.div`
+        background-color: white;
+        width: 400px;
+        height: 400px;
+        padding: 30px;
+        color: blue;
+        `
+        */
+
+        //export const Card = styled.div(()=>{
+        //  return()
+        //})
+
+        export const Card = styled.div(()=>({
+        backgroundColor: 'white',
+        width: 300,
+        height: 400,
+        padding: 30
+        }))
+
+
+        //usando interrogação dizemos que não é opcional informar esse valor no componente
+        /*
+        export const Title = styled.span<{ $color:string, $background?:string }>`
+        font-size: 19px;
+        font-weight: 800;
+        color: ${props => props.$color};
+        background: ${props => props.$background};
+        `
+        */
+
+        interface TitleProps {
+        $color: string, 
+        $background: string, 
+        children: ReactNode
+        }
+
+        //usar props em objetos de estilo, posso revover os parentese pq tenho só um parametro
+        export const Title: FunctionComponent<TitleProps> = styled.span(props=>({
+        fontSize:19,
+        fontWeight:800,
+        color: props.$color,
+        background: props.$background,
+        }))
+
+    no index.tsx
+
+        import { Card, Title } from './styles';
+
+        export default () => {
+            return(
+                //$color, o cifrao faz nao aparecer no DOM, podemos ver no navegador.
+                //Entende que é um estilo css
+                <Card>
+                    <Title $color='black' $background='hotpink'>Meu texto qualquer!</Title>
+                </Card>
+            )
+        }
+
+
+
+            
+

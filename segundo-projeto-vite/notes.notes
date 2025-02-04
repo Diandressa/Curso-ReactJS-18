@@ -1,0 +1,935 @@
+-- aula 28 capturando seu primeiro evento --
+
+  no App.tsx
+
+  const App = () => {
+    function clicou(){
+      alert('clicou aqui')
+    }
+
+    return (
+      /*
+      <div>
+        <button onClick={clicou}>
+          Clique aqui!
+        </button>
+      </div>
+      */
+
+      
+      <div>
+        <button onClick={ () => alert('clicou') }>
+          Clique aqui!
+        </button>
+      </div>
+      
+    )
+  }
+
+  export default App;
+
+-- aula 29 forma incorreta de passar eventos passar funçao com parametros --
+  no App.tsx
+
+  const App = () => {
+    const handleClick = (value: string) => {
+      alert(value)
+    }
+
+    return (  
+      /*  passar parametro de forma errada
+      <div>
+        <button onClick={handleClick('texto')}>
+          Clique aqui!
+        </button>
+      </div>
+      */
+
+      // forma correta, passar uma função anonima e chamar a função com o parametro
+      <div>
+        <button onClick={() => handleClick('texto')}>
+          Clique aqui!
+        </button>
+      </div>
+    )
+  }
+
+  export default App;
+
+-- aula 30 passando eventos como props --
+  cria um uma pasta em src chamada components
+  cria button.tsx dentro de components
+
+    em button.tsx
+
+    type Props = {
+      label: string;
+      onClick: () => void //void pq retorna vazio
+    }
+
+    export const Button = ({label, onClick}: Props) => {
+        return (
+            <button onClick={onClick}>
+                {label}
+            </button>
+        )
+    }
+
+    em App.tsx
+
+    import { Button } from "./components/button";
+
+    const handleClick = () => alert('Clicou')
+
+    const App = () => {
+      return (  
+        <div>
+          <Button 
+            label="Texto qualquer!"
+            onClick={handleClick}
+          />
+        </div>
+      )
+    }
+
+    export default App;
+
+  passando parametros:
+
+  no button.tsx
+
+    type Props = {
+        onClique: (label: string) => void //void pq retorna vazio
+    }
+
+    export const Button = ({onClique}: Props) => {
+        const label = 'Texto do botão!'
+
+        return (
+            <button onClick={() => onClique('Texto do alert')}>
+                {label}
+            </button>
+        )
+    }
+
+  no App.tsx
+
+    import { Button } from "./components/button";
+
+    const handleClick = (label:string) => alert(label)
+
+    const App = () => {
+      return (  
+        <div>
+          <Button 
+            onClique={handleClick}
+          />
+        </div>
+      )
+    }
+
+    export default App;
+
+-- aula 31 o que é propagação de eventos --
+
+  import { Button } from "./components/button";
+
+  const App = () => {
+
+    //clico no botão e aparece o alert do botão e o alert da div
+    return (  
+      <div>
+        <div onClick={() => alert('Cliquei na div')} style={{border: '1px solid red'}}>
+          <button onClick={() => alert('Cliquei no botão')}>
+            Texto button
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  export default App;
+
+-- aula 32 interrompendo a propagação de eventos --
+
+  no App.tsx
+
+  import { MouseEvent } from "react";
+  import { Button } from "./components/button";
+
+  const App = () => {
+
+  const handleClick = (event: MouseEvent) => {
+      //Interrompe a propagação do evento
+      event.stopPropagation()
+
+      alert('Cliquei no botão')
+    }
+
+    return (  
+      <div>
+        <div onClick={() => alert('Cliquei na div')} style={{padding: 30, background: 'pink'}}>
+          <button onClick={handleClick}>
+            Texto button
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  export default App;
+
+-- aula 33 capturando eventos cuja propagação foi interrompida --
+
+  import { MouseEvent } from "react";
+  import { Button } from "./components/button";
+
+  const App = () => {
+
+    const handleClick = (event: MouseEvent) => {
+      //Interrompe a propagação do evento
+      event.stopPropagation()
+
+      alert('Cliquei no botão')
+    }
+
+    return (  
+      // onClickCapture é executado primeiro que os outros eventos, ignora o stopPropagation
+      <div>
+        <div onClickCapture={() => alert('Cliquei na div')} style={{padding: 30, background: 'pink'}}>
+          <button onClick={handleClick}>
+            Texto button
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  export default App;
+
+-- aula 34 removendo comportamentos padrão --
+
+  no App.tsx
+
+  import { FormEvent } from "react";
+
+  const App = () => {
+    const handleSubmit = (e: FormEvent) => {
+      e.preventDefault()
+      alert('Formulário enviado!')
+    }
+
+    return (  
+      <div>
+        <form onSubmit={handleSubmit}>
+          <input />
+          <button>Enviar</button>
+        </form>
+      </div>
+    )
+  }
+
+  export default App;
+
+-- aula 35 O que são Hooks Conhecendo o primeiro hook useState --
+
+  no App.tsx  
+  import {useState} from 'react';
+
+  const App = () => {
+    //envia o valor inicial pra função useState
+    const [count, setCount] = useState(0);
+
+    const handleClick = () => {
+      setCount(count + 1)
+    }
+    const handleClickless = () => {
+      setCount(count - 1)
+    }
+
+    return (  
+      <div>
+        <h2>{count}</h2>
+        <button onClick={handleClick}>
+          Adicionar + 1
+        </button>
+        <button onClick={handleClickless}>
+          Adicionar - 1
+        </button>
+      </div>
+    )
+  }
+
+  export default App;
+
+-- aula 36 renderização condicional com states --
+
+  no App.tsx
+
+  import {useState} from 'react';
+
+  const App = () => {
+    const [logged, setLogged] = useState(false);
+
+    const handleClick = () => {
+      //valor oposto/ ao contrário - inverte o valor de logged
+      setLogged(!logged);
+    }
+
+    return (  
+      //Se logged for true exibe a mensagem
+      <div>
+        {logged &&
+          <div>
+            Usuário logado (Área privada)
+          </div>
+        }
+
+        <button onClick={handleClick}>
+          {logged ? 'Ocultar' : 'Mostrar'}
+        </button>
+      </div>
+    )
+  }
+
+  export default App;
+
+-- aula 37 usando states em campos --
+
+  no App.tsx
+
+  import {ChangeEvent, useState} from 'react';
+
+  const App = () => {
+    const [value, setValue] = useState('');
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setValue(e.target.value);
+    }
+
+    return (  
+      <div>
+        <input 
+          value={value}
+          onChange={handleChange}
+        />
+
+        <h2>{value}</h2>
+      </div>
+    )
+  }
+
+  export default App;
+
+-- aula 38 states reenderização do componente --
+
+  o useState quando mudamos o valor é renderizado novamente todo o componente
+  
+  No app.tsx
+
+  import {ChangeEvent, useState} from 'react';
+
+  const App = () => {
+    const [value, setValue] = useState('');
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setValue(e.target.value);
+    }
+    /*
+    if(value != ''){
+      return (
+        <div>
+          Você já escreveu
+        </div>
+      )
+    }
+    */
+    return (  
+      <div>
+        {value == '' ?
+          <>
+            <input 
+              value={value}
+              onChange={handleChange}
+            />
+
+            <h2>{value}</h2>
+          </>
+          :
+          'Você já escreveu'
+
+        } 
+        
+      </div>
+    )
+  }
+
+  export default App;
+
+-- aula 39 states mudando no tempo --
+
+  no app.tsx
+
+  import { useState } from "react";
+
+  const App = () => {
+    const[count, setCount] = useState(0);
+
+    const handleClick = () => {
+      setCount(count + 1); // setCount(0 + 1)
+      setCount(count + 1); // setCount(0 + 1) continuo tendo zero pq nao renderiza o componente de novo, renderiza uma vez por clique (prejudica o desempenho renderizar 3 vezes com um clique)
+      setCount(count + 1); // setCount(0 + 1)
+
+      //quando usamos funcoes que muda a variavel de estado o ts escuta por ultimo
+      
+      //o alert é executado antes do setCount, independente da ordem
+      //alert(count)
+    }
+
+    return (  
+      //ao clicar ele envia o alert com o valor anterior (antes de adicionar mais 1) e no count no componente ele aparece o valor com a soma +1
+      //isso ocorre pq os state renderizam novamente o componente
+      <div>
+        <h2>{count}</h2>
+
+        <button onClick={handleClick}>
+          Adicionar +3
+        </button>   
+      </div>
+    )
+  }
+
+  export default App;
+
+-- aula 40 state updater --
+
+  no App.tsx
+
+  import { useState } from "react";
+
+  const App = () => {
+    const[count, setCount] = useState(0);
+
+    const handleClick = () => {
+      /*
+      setCount(count + 1);
+      setCount(count + 1);
+      setCount(count + 1); // setCount(0 + 1) não atualiza o mesmo comando varias vezes em tempo real
+      */
+
+      //enviamos o valor dentro de uma função (o valor precisa ser do mesmo tipo do count)
+      //setCount(() => 10)
+
+      //receber um argumento/parametro na funcao, c ja é a funcao sendo criada, ele é o parametro tb
+      /*
+      setCount(c => c + 1) // 0 + 1 = 1 (na fila)
+      setCount(c => c + 1) // 1 + 1 = 2 (na fila)
+      setCount(c => c + 1) // 2 + 1 = 3 (na fila)
+      */
+      
+      //c diferente de count, c é o valor atualizado
+
+      //atualizar valor no alert, no alerta nao pegamos o valor da fila, pegamos a soma 
+      /*
+      setCount(count +1)
+      alert(count +1)
+      */
+
+      /*
+      setCount(count + 1) // 0 + 1 = 1
+      setCount(c => c + 1) // c pega o valor da fila que no caso é 1 e soma mais 1
+      */
+
+      setCount(count + 2)
+    }
+
+    return (  
+      //ao clicar ele envia o alert com o valor anterior (antes de adicionar mais 1) e no count no componente ele aparece o valor com a soma +1
+      //isso ocorre pq os state renderizam novamente o componente
+      <div>
+        <h2>{count}</h2>
+
+        <button onClick={handleClick}>
+          Adicionar +2
+        </button>   
+      </div>
+    )
+  }
+
+  export default App;
+
+-- aula 41 Atualizando Objetos no State --
+
+  no App.tsx
+
+  import { ChangeEvent, useState } from "react";
+
+  const App = () => {
+    const[fullName, setFullName] = useState({firstName: '', lastName: ''});   
+
+    const handleChangeFirstName = (e: ChangeEvent<HTMLInputElement>) => {
+      //fullName.firstName = e.target.value; no react temos que usar a funcao para alterar o estado para fazer essa alteraçao no valor do objeto
+      //cria um novo objeto com o objeto copiado o objeto registrado na memoria e muda a valor desejado
+      setFullName({...fullName, firstName: e.target.value})//... copia todas as propriedades do objeto spread operator
+    }
+
+    const handleChangeLastName = (e: ChangeEvent<HTMLInputElement>) => {
+      setFullName({...fullName, lastName: e.target.value})
+    }
+    return (  
+      <div>
+        <input
+          value={fullName.firstName}
+          onChange={handleChangeFirstName}
+        />
+
+        <p>{fullName.firstName}</p>
+
+        <input
+          value={fullName.lastName}
+          onChange={handleChangeLastName}
+        />
+
+        <p>{fullName.lastName}</p>
+      </div>
+    )
+  }
+
+  export default App;
+
+-- aula 42 Arrays no State Adicionando um elemento --
+
+  no App.tsx
+
+  import { ChangeEvent, useState } from "react";
+
+  const App = () => {
+    //Preciso definir o tipo array no useState, o tipo vai ser um array de string e envia uma array vazio pro useState
+    const [tasks, setTasks] = useState<string[]>([])
+
+    //agora enviamos uma string pro useState, ts reconhece aspas como sendo string
+    const [inputValue, setInputValue] = useState('')
+
+    const handleAdd = () => {
+      if(inputValue == '') return; //se o input tiver vazio damos return para interromper a funcao
+      
+      /*Metodo 1
+      //nao posso mudar o array original, tenho que copiar ele
+
+      setTasks([...tasks, inputValue] ) // copia todos os elementos do array e envio como segundo parametro o inputValue
+      
+      */
+
+      /*Metodo 2
+      //concat para inserir um valor na array
+      setTasks(tasks.concat([inputValue]))
+      */
+
+      //Metodo 3
+      const newTasks = [...tasks] //copia o array
+      newTasks.push(inputValue) //adiciona o inputValue no array
+
+      setTasks(newTasks) //seta o novo array
+
+      setInputValue('') //depois limpa o campo deixanso vazio
+    }
+
+    return (  
+      <div>
+        <h1>Minha lista de tarefas</h1>
+        <div>
+          <input
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+          />
+
+          <button onClick={handleAdd}>
+            Adicionar
+          </button>
+
+          <div>
+            <ul>
+              {tasks.map((value, key) => (
+                <li key={key}>
+                  {value}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    )
+  }
+
+  export default App;
+
+-- aula 43 Arrays no State Removendo um elemento --
+
+  no App.tsx
+
+  import { ChangeEvent, useState } from "react";
+
+  const App = () => {
+    //Preciso definir o tipo array no useState, o tipo vai ser um array de string e envia uma array vazio pro useState
+    const [tasks, setTasks] = useState<string[]>([])
+
+    //agora enviamos uma string pro useState, ts reconhece aspas como sendo string
+    const [inputValue, setInputValue] = useState('')
+
+    const handleAdd = () => {
+      if(inputValue == '') return; //se o input tiver vazio damos return para interromper a funcao
+
+      setTasks([...tasks, inputValue] ) // copia todos os elementos do array e envio como segundo parametro o inputValue
+      setInputValue('')
+    }
+
+    // key é o id do elemento que vamos deletar
+    const handleDel = (key:number) => {
+      setTasks(tasks.filter((_value, index) => index != key)
+        //setar no array tasks só os valores que forem diferentes, os que forem iguais nao seta e nao aparece no compodente ao renderizar
+
+        //verifico no filtro quando o index é diferente do key enviado
+        //seto na lista só os valores true, se os valores forem iguais false.
+        //Se eu clicar e os valores forem igual ai ele nao seta no tasks
+        
+        //se existir no array um index igual ao enviado (key) apagaremos ele, tirando da lista 
+      )
+    }
+
+    return (  
+      <div>
+        <h1>Minha lista de tarefas</h1>
+        
+        <div>
+          <h2>Lista</h2>
+        
+          <input
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+          />
+
+          <button onClick={handleAdd}>
+            Adicionar
+          </button>
+
+          <div>
+            <ul>
+              {tasks.map((value, key) => (
+                
+                <li key={key}>
+                  {value}
+                  <strong>{key}</strong>
+                  -
+
+                  <button 
+                    onClick={() => handleDel(key)}
+                  >
+                    Excluir {key}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    )
+  }
+
+  export default App;
+
+-- aula 44 arrays no state alterando um elemento checkbox --
+
+  no App.tsx
+
+  import { ChangeEvent, useState } from "react";
+
+  const App = () => {
+    const [tasks, setTasks] = useState<{label:string, done:boolean}[]>([])
+
+    const [inputValue, setInputValue] = useState('')
+
+    const handleAdd = () => {
+      if(inputValue == '') return; 
+
+      setTasks([...tasks, { label: inputValue, done:false }] ) 
+      setInputValue('')
+    }
+
+    const handleDel = (key:number) => {
+      setTasks(tasks.filter((_value, index) => index != key)
+      )
+    }
+
+    const handleToggleDone = (key:number) => {
+      const newTasks = [...tasks]
+      newTasks[key].done = !newTasks[key].done //newTasks com atributo done recebe false 
+      //agora setamos esse valor no tasks
+      setTasks(newTasks)
+    }
+
+    return (  
+      <div>
+        <h1>Minha lista de tarefas</h1>
+        
+        <div>
+          <h2>Lista</h2>
+        
+          <input
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+          />
+
+          <button onClick={handleAdd}>
+            Adicionar
+          </button>
+
+          <div>
+            <ul>
+              {tasks.map((value, key) => (
+                
+                <li key={key}>
+                  <input 
+                    type="checkbox"
+                    checked={value.done} //coloca o false ou true
+                    onChange={() => handleToggleDone(key)}
+                  />
+                  {value.label}
+                  <strong>{key}</strong>
+                  -
+
+                  <button 
+                    onClick={() => handleDel(key)}
+                  >
+                    Excluir {key}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    )
+  }
+
+  export default App;
+
+-- aula 45 conhecendo o hook useEffect e o CleanUp --
+  
+  no App.tsx
+
+    import { useState } from "react";
+    import { Card } from "./components/Card";
+
+    const App = () => {
+      const [visible, setVisible] = useState(false);
+
+      const handleClick = () =>setVisible(!visible);//deixa oposto de false, ou seja, true
+      
+
+      return (  
+        /* {visible && <Card/>} se true eu mostro o card */
+        <div>
+          <button onClick={handleClick}>Mostrar/ Ocultar</button>
+          {visible && <Card/>}
+          
+        </div>
+      )
+    }
+
+    export default App;
+
+  Cria um componente Card.tsx dentro da pasta components
+
+  no Card.tsx
+
+    import { useEffect } from "react";
+
+    export const Card = () => {
+        //Monitora quando o componente é criado e quando ele some
+        useEffect(() => {
+            //o StrictMode executa duas vezes o código
+            console.log('Card foi renderizado');
+            //cleanup 
+            return () => console.log('Card sumiu');
+        }, [])
+
+        return(
+            <div>
+                Esse é o card
+            </div>
+        )
+    }
+
+  no main.tsx comenta o strictmode
+
+      import { StrictMode } from 'react'
+      import { createRoot } from 'react-dom/client'
+      import './index.css'
+      import App from './App.tsx'
+
+      createRoot(document.getElementById('root')!).render(
+        //<StrictMode>
+          <App />
+        //</StrictMode>,
+      )
+
+-- aula 46 monitorando dependencias que é um array com useEffect --
+
+  no App.tsx
+    import { Card } from "./components/Card";
+
+    const App = () => {
+      return (  
+        <div>
+          <Card/>
+        </div>
+      )
+    }
+
+    export default App;
+
+  no Card.tsx
+
+    import { useState, useEffect } from "react"
+
+    export const Card = () => {
+        const [firstName, setFirstName] = useState('');
+        const [lastName, setLastName] = useState('');
+        const [fullName, setFullName] = useState('');
+
+        //useEffect recebe dois parametros, no caso esta recebendo uma funcao e um array vazio
+        //as dependencias servem para monitorar as variaveis de estado, quando ha uma alteracao no useState eu executo o useEffect para monitorar
+
+        //no array vazio mandamos as variaveis que irao ser alteradas e na funcao a logica para visualizar
+        /*
+        useEffect(() => {
+            setFullName(`${firstName} ${lastName}`)
+        }, [firstName, lastName])
+        */
+
+        //Monitorar só o firstName
+        /*
+        useEffect(() => {
+            setFullName(`${firstName}`)
+        }, [firstName])
+        */
+
+        //Funçao de clenaUp - o return imprime quando foi atualizado
+        useEffect(() => {
+            setFullName(`${firstName} ${lastName}`)
+            //o useefect é uma funcao executada a cada alteraçao, entao toda vez que alteramos vai dar o retorno com o console log no inspecionar do navegador
+            return () => console.log('useEffect já foi execurtado')
+        }, [firstName, lastName])
+
+        return(
+            <div>
+                <input
+                    value={firstName}
+                    onChange={e => setFirstName(e.target.value)}
+                /><br></br>
+
+                <input
+                    value={lastName}
+                    onChange={e => setLastName(e.target.value)}
+                /><br></br>
+
+                <p>
+                    Meu nome completo é : {fullName}
+                </p>
+            </div>
+        )
+    }
+
+-- aula 47 exemplos praticos do uso do cleanUp --
+
+  no App.tsx
+
+    import { useState } from "react";
+    import { Card } from "./components/Card";
+
+    const App = () => {
+      const [visible, setVisible] = useState(false);
+
+      const handleClick = () => setVisible(!visible);
+
+      return (  
+        <div>
+          <button onClick={handleClick}>Mostrar/Ocultar</button>
+
+          {visible && 
+            <Card/>
+          }
+          
+        </div>
+      )
+    }
+
+    export default App;
+
+  no Card.tsx
+
+    import { useEffect, useState } from "react"
+
+    export const Card = () => {
+        //const [count, setCount] = useState(0);
+        /*
+        useEffect(()=>{
+            //executa a função a cada segundo 
+            // setInterval(() => {
+            //     //o componente só atualiza o count com uma funçao
+            //      setCount(count + 1)
+            //      console.log('Executei e o count é', count)
+            // }, 1000)
+        }, [count])
+
+        //no useEffect podemos enviar o que sera alterado para que execute a funçao, então toda vez que mudar o count o setInterval teoricamente é executado. Porém o setInterval acaba sendo executado várias vezes pq ele está na memoria, precisamos limpar ele da memoria a cada renderizacao
+
+        */
+
+        //usamos o cleanUp para resolver isso
+        /*
+        useEffect(()=>{
+            //setInterval retorna um numero tipo number
+            const intervalId = setInterval(()=>{
+                setCount(count + 1)
+                console.log('Executei e o count é', count + 1)
+            }, 1000)
+
+            //clear Interval para a funcao setInterval
+            return () => clearInterval(intervalId);
+        }, [count])
+        */
+
+        //outro exemplo de cleanUp que pode ser utilizado é o Listeners - monitora o DOM alguma interaçao
+
+        useEffect(()=>{
+            const handleWindowClick = () => {
+                console.log("Cliquei na janela")
+            }
+            //quando clico no botao varias vezes ele chama a funcao varias vezes e coloca na memoria, entao ele executa o eventListener toda vez que clico e isso vai escalonando e acumulando com os outros cliques 
+
+            //temos que limpar o evento para toda vez que clicar no botao
+            window.addEventListener('click', handleWindowClick)
+
+            //limpando com removeEventListener, ele ativa o eventLinster uma vez pra escutar o click e depois limpa esse listenter para proxima vez que clicar nao acumular
+            return () => window.removeEventListener('click', handleWindowClick);
+        }, [])
+        
+        return(
+            <div>
+              Card está visivel
+            </div>
+        )
+    }
+
+
+
+
+
+
+
+  
+
