@@ -367,6 +367,38 @@
             )
         }
 
+-- aula 55 styled components pseudosseletores e aninhamento --
+
+    Em components cria o arquivo input.ts
+        import styled from "styled-components";
+
+        export const Input = styled.input`
+            padding: 10px 30px;
+            outline: none;
+            transition: all .6s;
+            border: 1px solid transparent;
+
+            &:focus{
+                border-color: red;
+            }
+
+            &:hover{
+                background-color: hotpink;
+            }
+        `
+
+    Em App.tsx
+        import { Input } from "./components/input";
+
+        const App = () => {
+        return(
+            <Input></Input>
+            )
+        }
+
+        export default App;
+
+
 
 
             
