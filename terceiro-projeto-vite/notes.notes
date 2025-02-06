@@ -430,6 +430,61 @@
 
 -- aula 57 styled components theming --
 
+    cria uma pasta theme 
+        dentro da pasta cria o arquivo theme.ts
+            const theme = {
+            primary: 'yellow',
+            secondary: 'green',
+            sizeSM: '10'
+        }
+
+        //ja esporta os tipos da const theme sem eu precisar digitar para cada um no compnente
+        export type ThemeType = typeof theme;
+        export default theme;
+
+    cria o arquivo styled.ts
+        import { ThemeType } from "./theme";
+
+        declare module 'styled-components' {
+            export interface DefaultTheme extends ThemeType{}
+        }
+
+    na pasta components em input.ts
+
+        import styled from "styled-components";
+
+        export const Input = styled.input`
+        padding: 10px 30px;
+        outline: none;
+        transition: all .6s;
+        border: 1px solid transparent;
+        background-color: ${props => props.theme.primary};
+
+        &.focus {
+            border-color: red;
+        }
+
+        &.hover {
+            background-color: green;
+        }
+        `;
+
+    em App.tsx
+
+        import { ThemeProvider } from "styled-components";
+        import theme from "./theme/theme";
+        import { Input } from "./components/input";
+
+        const App = () => {
+        return(
+            <ThemeProvider theme={theme}>
+                <Input/>
+            </ThemeProvider>
+            )
+        }
+
+        export default App;
+
 
 
 
