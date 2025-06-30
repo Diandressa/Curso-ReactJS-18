@@ -2,126 +2,142 @@
   Curso da Udemy
 
 ## Seção 3
-### aula 11 iniciando projeto CRA
-  npx executa pacotes
-  npm - gerencia/baixa pacotes
 
-  npx create-react-app nome-projeto-cra --template typescript
-  cd para entrar no projeto
-  npm run start
-  erro instalr o npm, checar npm -v
-  digitar Set-ExecutionPolicy RemoteSigned no prompt (executar powersheel como admin)
+### Aula 11 - Iniciando projeto CRA
 
-### aula 12 iniciando projeto vite
-  npm create vite@latest
-  react
-  typescript + SWC -> mais recente
-  cd na pasta do projeto
-  npm install ou npm i
-  npm run dev
+npx executa pacotes
+npm - gerencia/baixa pacotes
 
-### aula 14 Outras formas de criar componentes 
+npx create-react-app nome-projeto-cra --template typescript
+cd para entrar no projeto
+npm run start
+erro instalr o npm, checar npm -v
+digitar Set-ExecutionPolicy RemoteSigned no prompt (executar powersheel como admin)
 
- No app.tsx
+### Aula 12 - Iniciando projeto vite
 
-  const App = () => {
+npm create vite@latest
+react
+typescript + SWC -> mais recente
+cd na pasta do projeto
+npm install ou npm i
+npm run dev
+
+### Aula 14 - Outras formas de criar componentes 
+
+No app.tsx
+```
+const App = () => {
+  return(
+    <div>
+      <h1>Componente com function</h1>
+    </div>
+  )
+}
+
+export default App;
+```
+maneira antiga com funçoes de rastreio, rastreiar o ciclo de vida
+
+```
+import React from "react";
+
+class App extends React.Component{
+  render(){
     return(
       <div>
-        <h1>Componente com function</h1>
+        <h1>Componente com class</h1>
       </div>
     )
   }
+}
+```
 
-  export default App;
+#### Hooks rastreia atualmente
 
+> export default App;
 
-  maneira antiga com funçoes de rastreio, rastreiar o ciclo de vida
-
-  import React from "react";
-
-  class App extends React.Component{
-    render(){
-      return(
-        <div>
-          <h1>Componente com class</h1>
-        </div>
-      )
-    }
-  }
+### Aula 15 - Importando e exportando componentes
 
 
-  //Hooks rastreia atualmente
+> Export component por defaulf em linha:
 
-  //export default App;
+#### Exportar default a função não é nomeada
 
--- aula 15 Importando e exportando componentes --
-
-
-  //Export component por defaulf em linha
-  //exportar default a função não é nomeada
-
-
-  export default() => { 
-      return(
-          <h4>Meu nome é: Andressa</h4>
-      )
-  }
-
-  //Export em linha
-
-  export const UserName = () => { 
-      return(
-          <h4>Meu nome é: Andressa</h4>
-      )
-  }
-
-
-  //Export com um nome no final
-  const UserName = () => {
-      return(
-          <h4>Meu nome é: Andressa</h4>
-      )
-  }
-
-  const UserEmail = () => {
-      return(
-          <h4>Meu email é: email@email.com</h4>
-      )
-  }
-
-  const UserAge = () => {
-      return(
-          <h4>Minha idade é: 28</h4>
-      )
-  }
-
-  //exportar a função como chaves
-  export { UserName, UserEmail };
-  export default UserAge;
-
-  //Importa no App.tsx
-
-  //pasta components fica no src 
-  import UserAge, { UserName, UserEmail} from './components/UserName'
-
-  // alias (pseudonimo) = 'as' renomeia a funcão importada
-  // import { UserName as UserN, UserEmail as UserE} from './UserName'
-
-  const App = () => {
-    return (
-      <div>
-        <h1>Meu primeiro componente de usuário</h1>
-
-        <UserName />
-        <UserEmail />
-        <UserAge />
-      </div>
+```
+export default() => { 
+    return(
+        <h4>Meu nome é: Andressa</h4>
     )
-  }
+}
 
-  export default App;
+```
 
--- aula 16 Como organizar vários componentes --
+#### Export em linha
+
+```
+export const UserName = () => { 
+    return(
+        <h4>Meu nome é: Andressa</h4>
+    )
+}
+```
+
+#### Export com um nome no final
+
+```
+const UserName = () => {
+    return(
+        <h4>Meu nome é: Andressa</h4>
+    )
+}
+
+const UserEmail = () => {
+    return(
+        <h4>Meu email é: email@email.com</h4>
+    )
+}
+
+const UserAge = () => {
+    return(
+        <h4>Minha idade é: 28</h4>
+    )
+}
+
+//exportar a função como chaves
+export { UserName, UserEmail };
+export default UserAge;
+```
+
+#### Importa no App.tsx
+
+>pasta components fica no src \
+import UserAge, { UserName, UserEmail} from './components/UserName'
+
+>alias (pseudonimo) = 'as' renomeia a funcão importada\
+import { UserName as UserN, UserEmail as UserE} from './UserName'
+
+```
+import UserAge, { UserName, UserEmail} from './components/UserName';
+import { UserName as UserN, UserEmail as UserE} from './UserName';
+
+const App = () => {
+  return (
+    <div>
+      <h1>Meu primeiro componente de usuário</h1>
+
+      <UserName />
+      <UserEmail />
+      <UserAge />
+    </div>
+  )
+}
+
+export default App;
+```
+
+### Aula 16 - Como organizar vários componentes
+
   Cria os componente dentro de uma pasta Compenents
   export como default cada componente
 
