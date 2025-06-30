@@ -8,11 +8,19 @@
 npx executa pacotes
 npm - gerencia/baixa pacotes
 
+>CRA - Create React App
+
 npx create-react-app nome-projeto-cra --template typescript
+
 cd para entrar no projeto
-npm run start
-erro instalr o npm, checar npm -v
-digitar Set-ExecutionPolicy RemoteSigned no prompt (executar powersheel como admin)
+
+`npm run start`
+
+erro instala o npm, checar npm -v
+
+digitar Set-ExecutionPolicy RemoteSigned
+
+no prompt (executar powersheel como admin)
 
 ### Aula 12 - Iniciando projeto vite
 
