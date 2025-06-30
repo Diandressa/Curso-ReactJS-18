@@ -1,4 +1,7 @@
 -- aula 11 iniciando projeto CRA --
+  npx executa pacotes
+  npm - gerencia/baixa pacotes
+
   npx create-react-app nome-projeto-cra --template typescript
   cd para entrar no projeto
   npm run start
