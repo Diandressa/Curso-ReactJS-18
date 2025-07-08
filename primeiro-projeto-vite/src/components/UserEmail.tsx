@@ -1,10 +1,5 @@
-type Props = {
-    email: string
-}
-
-export const UserEmail = ({email} : Props) => {
+export const UserEmail = () => {
     return(
-        <h4>Meu email é: {email}</h4>
+        <h4>Meu email é: email@email.com</h4>
     )
 }
-

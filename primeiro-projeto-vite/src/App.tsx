@@ -1,12 +1,10 @@
-import UserAge, {UserName, UserEmail} from "./UserName";
+import { UserInfo } from "./components/UserInfo";
 
 const App = () => {
   return(
     <div>
       <h1>Componente de um usuário</h1>
-      <UserName/>
-      <UserEmail/>
-      <UserAge/>
+      <UserInfo/>
     </div>
   )
 }

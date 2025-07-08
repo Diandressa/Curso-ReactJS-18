@@ -31,6 +31,8 @@ cd na pasta do projeto
 npm install ou npm i
 npm run dev
 
+## Seção 4
+
 ### Aula 14 - Outras formas de criar componentes 
 
 #### Com variável
@@ -165,57 +167,62 @@ export default App;
 
 ### Aula 16 - Como organizar vários componentes
 
-  Cria os componente dentro de uma pasta Compenents
-  export como default cada componente
+Cria os componente dentro de uma pasta 
+  
+export como default cada componente
 
-  Arquvivo UserName.tsx 
+Arquivo UserName.tsx 
+```
+export const UserName = () => {
+  return(
+      <h4>Meu nome é: Andressa</h4>
+  )
+}
+```
 
-  export const UserName = () => {
+Cria um arquivo UserInfo.tsx dentro da pasta Components e importa todos os componentes do conjunto
+
+```
+import { UserAge } from "./UserAge"
+import { UserEmail } from "./UserEmail"
+import { UserName } from "./UserNAme"
+
+Exporta o componente com o fragment, que encapsula os outros componentes
+
+export const UserInfo = () => {
     return(
-        <h4>Meu nome é: Andressa</h4>
+        //<Fragment> or <> para englobar os outros componentes
+        <> 
+            <UserName />
+            <UserEmail />
+            <UserAge />
+        </>
     )
-  }
+}
+```
 
-  Cria um arquivo UserInfo.tsx dentro da pasta Components
-  e importa todos os componentes do conjunto
+** A função só exporta um componente por vez, por isso usamos o fragment
+**Com o fragment podemos encapsular componentes dentro de um componente pai
 
-  import { UserAge } from "./UserAge"
-  import { UserEmail } from "./UserEmail"
-  import { UserName } from "./UserNAme"
+No App.tsx importa o UserInfo
 
-  Exporta o componente com o fragment, que encapsula os outros componentes
+```
+import { UserInfo } from "./components/UserInfo";
 
-  export const UserInfo = () => {
-      return(
-          //<Fragment> or <> para englobar os outros componentes
-          <> 
-              <UserName />
-              <UserEmail />
-              <UserAge />
-          </>
-      )
-  }
+const App = () => {
+  return (
+    <div>
+      <h1>Meu primeiro componente de usuário</h1>
 
-  // A função só exporta um componente por vez, por isso usamos o fragment
-  // Com o fragment podemos encapsular componentes dentro de um componente pai
+      <UserInfo />
+    </div>
+  )
+}
 
-  No App.tsx importa o UserInfo
+export default App;
+```
 
-  import { UserInfo } from "./components/UserInfo";
-
-  const App = () => {
-    return (
-      <div>
-        <h1>Meu primeiro componente de usuário</h1>
-
-        <UserInfo />
-      </div>
-    )
-  }
-
-  export default App;
-
--- aula 17 Regras gerais do JSX --
+### Aula 17 - Regras gerais do JSX 
 
   export const UserAvatar = () => {
       return(
