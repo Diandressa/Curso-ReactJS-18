@@ -33,7 +33,9 @@ npm run dev
 
 ### Aula 14 - Outras formas de criar componentes 
 
+#### Com variável
 No app.tsx
+
 ```
 const App = () => {
   return(
@@ -45,7 +47,24 @@ const App = () => {
 
 export default App;
 ```
-maneira antiga com funçoes de rastreio, rastreiar o ciclo de vida
+
+#### Com função
+
+```
+function App(){
+  return(
+    <div>
+      <h1>Componente com func</h1>
+    </div>
+  )
+}
+
+export default App;
+```
+
+#### Modo antigo com render
+
+maneira antiga com funções de rastreio, rastreia o ciclo de vida
 
 ```
 import React from "react";
@@ -63,7 +82,7 @@ class App extends React.Component{
 
 #### Hooks rastreia atualmente
 
-> export default App;
+> usando useEffect e useState, monitora quando o componente nasce (renderiza) e morre ('desrenderizado')
 
 ### Aula 15 - Importando e exportando componentes
 
