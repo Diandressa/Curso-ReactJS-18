@@ -86,10 +86,9 @@ class App extends React.Component{
 
 ### Aula 15 - Importando e exportando componentes
 
-
 > Export component por defaulf em linha:
 
-#### Exportar default a função não é nomeada
+#### Exportar default, a função não é nomeada
 
 ```
 export default() => { 
@@ -108,6 +107,7 @@ export const UserName = () => {
         <h4>Meu nome é: Andressa</h4>
     )
 }
+
 ```
 
 #### Export com um nome no final
