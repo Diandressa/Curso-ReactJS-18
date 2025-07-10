@@ -29,7 +29,9 @@ react
 typescript + SWC -> mais recente
 cd na pasta do projeto
 npm install ou npm i
-npm run dev
+
+Rodar o projeto:
+`npm run dev`
 
 ## Seção 4
 
@@ -239,31 +241,32 @@ export const UserAvatar = () => {
 
 ### Aula 18 - JSX variáveis funções e objetos
 
-  export const UserName = () => {
-    //let name = 'twinkie winki' variavel
+```
+export const UserName = () => {
+  //let name = 'twinkie winki' variavel
 
-    //let names = {nome1: 'twinkie winki', nome2: 'telettubies'} obj
+  //let names = {nome1: 'twinkie winki', nome2: 'telettubies'} obj
 
-    let name = 'twinkie winki'
+  let name = 'twinkie winki'
 
-    /*
-    const formatName = (value: string) => {
-        return value.toUpperCase()
-    }
-    */
-
-    //const formatName = (value: string) => value.toUpperCase()
-
-    return(
-        //<h4>Meu nome é: { names.nome1 }</h4>
-
-        //<h4>Meu nome é: { formatName(name) }</h4>
-
-        <h4>Meu nome é: { name.toUpperCase() }</h4>
-    )
+  /*
+  const formatName = (value: string) => {
+      return value.toUpperCase()
   }
+  */
 
--- aula 19 JSX Renderização Condicional --
+  //const formatName = (value: string) => value.toUpperCase()
+
+  return(
+      //<h4>Meu nome é: { names.nome1 }</h4>
+
+      //<h4>Meu nome é: { formatName(name) }</h4>
+
+      <h4>Meu nome é: { name.toUpperCase() }</h4>
+  )
+}
+```
+### aula 19 JSX Renderização Condicional --
 
   Em App.tsx
 
