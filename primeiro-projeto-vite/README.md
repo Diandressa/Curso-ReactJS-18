@@ -224,17 +224,20 @@ export default App;
 
 ### Aula 17 - Regras gerais do JSX 
 
-  export const UserAvatar = () => {
-      return(
-          <img 
-              src="https://picsum.photos/seed/picsum/200/300" 
-              alt="Imagem avatar" 
-              onClick={() => alert('clicou')}
-          /> //fechar todas as tags
-      )
-  }
+```
+export const UserAvatar = () => {
+    return(
+        <img 
+            src="https://picsum.photos/seed/picsum/200/300" 
+            alt="Imagem avatar" 
+            onClick={() => alert('clicou')}
+        /> //fechar todas as tags
+    )
+}
 
--- aula 18 JSX variáveis funções e objetos --
+```
+
+### Aula 18 - JSX variáveis funções e objetos
 
   export const UserName = () => {
     //let name = 'twinkie winki' variavel
