@@ -4,14 +4,24 @@ import { UserEmail } from "./UserEmail"
 import { UserName } from "./UserName"
 import { UserRoles } from "./UserRoles"
 
-export const UserInfo = () => {
+type Props = {
+    name:string,
+    email:string,
+    age:number,
+    avatar:string,
+    roles: {id:number, title:string}[]
+}
+
+export const UserInfo = (props:Props) => {
     return(
         <>
-            <UserAvatar src="https://picsum.photos/seed/picsum/200/300"/>
-            <UserName name="Andressa"/>
-            <UserEmail email="email@email.com"/>
-            <UserAge age={99}/>
-            <UserRoles roles={[{id:1, title:'CEO'}]}/>
+            <UserAvatar src={props.avatar} />
+            <UserName name={props.name}/>
+            <UserEmail email={props.email}/>
+            <UserAge age={props.age}/>
+            <UserRoles roles={props.roles}/>
         </>
     )
 }
+
+//https://picsum.photos/seed/picsum/200/300
