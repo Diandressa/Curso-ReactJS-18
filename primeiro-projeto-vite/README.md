@@ -266,7 +266,7 @@ export const UserName = () => {
   )
 }
 ```
-### aula 19 JSX Renderização Condicional
+### Aula 19 JSX Renderização Condicional
 
 Em App.tsx
 ```
@@ -338,106 +338,110 @@ const App = () => {
 export default App;
 ```
 
--- aula 20 JSX Renderizando listas --
+### Aula 20 JSX Renderizando listas
 
-  export const UserRoles = () => {
-    //const roles = ['CEO', 'CTO', 'admin']
+```
+export const UserRoles = () => {
+  //const roles = ['CEO', 'CTO', 'admin']
 
-    const roles = [
-        {id: 1, title: 'CEO'},
-        {id: 2, title: 'CTO'}, 
-        {id: 3, title: 'admin'}
-    ]
+  const roles = [
+      {id: 1, title: 'CEO'},
+      {id: 2, title: 'CTO'}, 
+      {id: 3, title: 'admin'}
+  ]
 
+  return(
+      /*
+      <ul>
+          { roles.map((value, key) => (
+              <li key={key}>
+                  {value}
+              </li>
+          ))}
+      </ul>
+      */
+
+      <ul>
+          { roles.map(value => (
+              <li key={value.id}>
+                  {value.title}
+              </li>
+          ))}
+      </ul>
+  )
+}
+```
+No App.tsx
+
+```
+import { UserAge } from "./UserAge"
+import { UserAvatar } from "./UserAvatar"
+import { UserEmail } from "./UserEmail"
+import { UserName } from "./UserName"
+import { UserRoles } from "./UserRoles"
+
+export const UserInfo = () => {
     return(
-        /*
-        <ul>
-            { roles.map((value, key) => (
-                <li key={key}>
-                    {value}
-                </li>
-            ))}
-        </ul>
-        */
-
-        <ul>
-            { roles.map(value => (
-                <li key={value.id}>
-                    {value.title}
-                </li>
-            ))}
-        </ul>
+        //<Fragment> or <> para englobar os outros componentes
+        <> 
+            <UserAvatar />
+            <UserName />
+            <UserEmail />
+            <UserAge />
+            <UserRoles />
+        </>
     )
-  }
-  No App.tsx
+}
+```
 
-  import { UserAge } from "./UserAge"
-  import { UserAvatar } from "./UserAvatar"
-  import { UserEmail } from "./UserEmail"
-  import { UserName } from "./UserName"
-  import { UserRoles } from "./UserRoles"
+### Aula 21 JSX Filtrando listas 
+```
+export const UserRoles = () => {
+const roles = [
+    {id: 1, title: 'CEO'},
+    {id: 2, title: 'CTO'}, 
+    {id: 3, title: 'admin'}
+]
 
-  export const UserInfo = () => {
-      return(
-          //<Fragment> or <> para englobar os outros componentes
-          <> 
-              <UserAvatar />
-              <UserName />
-              <UserEmail />
-              <UserAge />
-              <UserRoles />
-          </>
-      )
-  }
+//typscript tipamos os parâmetros id e title e o retorne como boleano
 
--- aula 21 JSX Filtrando listas --
+//função que filtra string com C
+/*
+const filterRoles = (value: {id: number, title: string}): boolean => {
+    //Incluir o C no filtro, verifica no filtro string que incluem C
+    return value.title.includes('a')
+} 
+*/ 
 
-  	export const UserRoles = () => {
-    const roles = [
-        {id: 1, title: 'CEO'},
-        {id: 2, title: 'CTO'}, 
-        {id: 3, title: 'admin'}
-    ]
+/*
 
-    //typscript tipamos os parâmetros id e title e o retorne como boleano
-    
-    //função que filtra string com C
-    /*
-    const filterRoles = (value: {id: number, title: string}): boolean => {
-        //Incluir o C no filtro, verifica no filtro string que incluem C
-        return value.title.includes('a')
-    } 
-    */ 
+//ou podemos usar de forma otimizada
+const filterRoles = (value: {id: number, title: string}): boolean => value.title.includes('a')
 
-    /*
-    
-    //ou podemos usar de forma otimizada
-    const filterRoles = (value: {id: number, title: string}): boolean => value.title.includes('a')
-    
 
-    //filter precisa retornar true ou false, o value do filter é cada elemento pesquisado
-    //então eu mando pra função filter cada elemento pesquisado
-    
-    const filteredRoles = roles.filter(value => filterRoles(value))
-    
-    */
+//filter precisa retornar true ou false, o value do filter é cada elemento pesquisado
+//então eu mando pra função filter cada elemento pesquisado
 
-    //mais fácil usar o include já no filter em vez de chamar a função
+const filteredRoles = roles.filter(value => filterRoles(value))
 
-    const filteredRoles = roles.filter(value => value.title.includes('C'))
+*/
 
-    // o map percorre os elementos do objeto, precisamos declarar a key no react quando não utilizamos o indice mesmo assim
-    return(
-        <ul>
-            { filteredRoles.map((value, key) => (
-                <li key={key}>
-                    {value.title}
-                </li>
-            ))}
-        </ul>
-    )
-  }
+//mais fácil usar o include já no filter em vez de chamar a função
 
+const filteredRoles = roles.filter(value => value.title.includes('C'))
+
+// o map percorre os elementos do objeto, precisamos declarar a key no react quando não utilizamos o indice mesmo assim
+return(
+    <ul>
+        { filteredRoles.map((value, key) => (
+            <li key={key}>
+                {value.title}
+            </li>
+        ))}
+    </ul>
+)
+}
+```
 -- aula 22 Passando props para um componente --
 
   UserAge.tsx
