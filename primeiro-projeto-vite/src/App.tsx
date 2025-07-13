@@ -1,11 +1,19 @@
 import { UserInfo } from "./components/UserInfo";
 
 const App = () => {
+  const isLogged = true;
+
+  if(isLogged){
+    return(
+      <div>
+        <h1>Componente de um usuário</h1>
+        <UserInfo/>
+      </div>
+    )
+  } 
+
   return(
-    <div>
-      <h1>Componente de um usuário</h1>
-      <UserInfo/>
-    </div>
+    <h1>Não esta logado</h1>
   )
 }
 

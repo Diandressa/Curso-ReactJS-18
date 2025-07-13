@@ -266,72 +266,77 @@ export const UserName = () => {
   )
 }
 ```
-### aula 19 JSX Renderização Condicional --
+### aula 19 JSX Renderização Condicional
 
-  Em App.tsx
+Em App.tsx
+```
+import { UserInfo } from "./components/UserInfo";
 
-  import { UserInfo } from "./components/UserInfo";
-
-  const App = () => {
-    const isLogged = false
-    /*
-    if(isLogged){
-      return (
-        <div>
-          <h1>Meu primeiro componente de usuário</h1>
-    
-          <UserInfo />
-        </div>
-      )
-    } 
-
-    return(
-      <h1>Não está logado</h1>
-    )
-  */
-
-  //operador de atribuição lógica && -> se a condição for true renderiza o componente
+const App = () => {
+  const isLogged = false
   /*
+  if(isLogged){
     return (
       <div>
         <h1>Meu primeiro componente de usuário</h1>
-        { isLogged && <UserInfo />} 
+  
+        <UserInfo />
       </div>
     )
-  */
+  } 
 
-  //operador ternário
-  /*
-    return (
-      <div>
-        <h1>
-          {isLogged ? 'Meu primeiro componente de usuário' : 'Não está logado'}
-        </h1>
+  return(
+    <h1>Não está logado</h1>
+  )
+*/
+```
 
-        { isLogged && <UserInfo />} 
-      </div>
-    )
-  */
+> Operador de atribuição lógica && -> se a condição for true renderiza o componente
+```
+/*
+  return (
+    <div>
+      <h1>Meu primeiro componente de usuário</h1>
+      { isLogged && <UserInfo />} 
+    </div>
+  )
+*/
+```
+> Operador ternário
 
-    //Se não está logado dá o return que interrompe o código ali
-    if(!isLogged) {
-      return;
-      //or return null
-    }
+```
+/*
+  return (
+    <div>
+      <h1>
+        {isLogged ? 'Meu primeiro componente de usuário' : 'Não está logado'}
+      </h1>
 
-    return (
-      <div>
-        <h1>
-          {isLogged ? 'Meu primeiro componente de usuário' : 'Não está logado'}
-        </h1>
+      { isLogged && <UserInfo />} 
+    </div>
+  )
+*/
 
-        { isLogged && <UserInfo />} 
-      </div>
-    )
-
+  //Se não está logado dá o return que interrompe o código ali
+  if(!isLogged) {
+    return;
+    //or return null
   }
 
-  export default App;
+  return (
+    <div>
+      <h1>
+        {isLogged ? 'Meu primeiro componente de usuário' : 'Não está logado'}
+      </h1>
+
+      { isLogged && <UserInfo />} 
+    </div>
+  )
+
+}
+
+export default App;
+```
 
 -- aula 20 JSX Renderizando listas --
 
