@@ -1,7 +1,7 @@
 import { UserInfo } from "./components/UserInfo";
 
 const App = () => {
-  const isLogged = false;
+  const isLogged = true;
 
   //se nao esta logado o return interrompe o resto do código
   if(!isLogged) {
