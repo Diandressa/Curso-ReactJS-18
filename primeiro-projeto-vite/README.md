@@ -442,182 +442,194 @@ return(
 )
 }
 ```
--- aula 22 Passando props para um componente --
+## Aula 22 Passando props para um componente 
 
-  UserAge.tsx
+```
+UserAge.tsx
 
-    type Props = {
-      age: number
-    }
-    export const UserAge = ({age}: Props) => {
-        return(
-            <h4>Minha idade é: {age}</h4>
-        )
-    }
+  type Props = {
+    age: number
+  }
+  export const UserAge = ({age}: Props) => {
+      return(
+          <h4>Minha idade é: {age}</h4>
+      )
+  }
+```
+```
+UserAvatar.tsx
 
-  UserAvatar.tsx
+  type Props = {
+    src: string
+  }
+  export const UserAvatar = ({src}: Props) => {
+      return(
+          <img 
+              src={src}
+              alt="Imagem avatar" 
+              onClick={() => alert('clicou')}
+          />
+      )
+  }
+```
 
-    type Props = {
-      src: string
-    }
-    export const UserAvatar = ({src}: Props) => {
-        return(
-            <img 
-                src={src}
-                alt="Imagem avatar" 
-                onClick={() => alert('clicou')}
-            />
-        )
-    }
+```
+UserEmail.tsx
 
-  UserEmail.tsx
+  type Props = {
+    email: string
+  }
 
-    type Props = {
-      email: string
-    }
+  export const UserEmail = ({email} : Props) => {
+      return(
+          <h4>Meu email é: {email}</h4>
+      )
+  }
+```
+```
+UserRoles.tsx
 
-    export const UserEmail = ({email} : Props) => {
-        return(
-            <h4>Meu email é: {email}</h4>
-        )
-    }
+  type Props = {
+    roles: {id: number, title: string}[]
+  }
+  export const UserRoles = ({roles}: Props) => {   
+      return(
+          <ul>
+              { roles.map((value, key) => (
+                  <li key={key}>
+                      {value.title}
+                  </li>
+              ))}
+          </ul>
+      )
+  }
 
-  UserRoles.tsx
+```
+```
+UserName.tsx
 
-    type Props = {
-      roles: {id: number, title: string}[]
-    }
-    export const UserRoles = ({roles}: Props) => {   
-        return(
-            <ul>
-                { roles.map((value, key) => (
-                    <li key={key}>
-                        {value.title}
-                    </li>
-                ))}
-            </ul>
-        )
-    }
+  /* passar um valor como propriedade da função, no typescript tipamos o valor, aqui é uma string
+  export const UserName = ({name}: {name: string}) => {
 
-  UserName.tsx
+    return(
+        <h4>Meu nome é: { name.toUpperCase() }</h4>
+    )
+  }
+  */
 
-    /* passar um valor como propriedade da função, no typescript tipamos o valor, aqui é uma string
-    export const UserName = ({name}: {name: string}) => {
+  //Podemos trocar a tipagem com type Props
+  /*
+  type Props = {
+      name: string;
+  }
+
+  export const UserName = ({name}: Props) => {
 
       return(
           <h4>Meu nome é: { name.toUpperCase() }</h4>
       )
-    }
-    */
+  }
+  */
+```
+```
+//definimos como parâmetro o valor name do tipo props, que é um objeto, e acessamos o name do obj que é uma string
+type Props = {
+    name: string;
+}
 
-    //Podemos trocar a tipagem com type Props
-    /*
-    type Props = {
-        name: string;
-    }
+export const UserName = ({name}: Props) => {
+    
+    //varivel obtem o name e atribuie a Props
+    //const {name} = props 
+    return(
+        <h4>Meu nome é: { name }</h4>
+    )
+}
+```
+```
+UserInfo.tsx
+  import { UserAge } from "./UserAge"
+  import { UserAvatar } from "./UserAvatar"
+  import { UserEmail } from "./UserEmail"
+  import { UserName } from "./UserName"
+  import { UserRoles } from "./UserRoles"
 
-    export const UserName = ({name}: Props) => {
-
-        return(
-            <h4>Meu nome é: { name.toUpperCase() }</h4>
-        )
-    }
-    */
-
-    //difinimos como parametro o valor name do tipo props, que é um objeto, e acessamos o name do obj que é uma string
-    type Props = {
-        name: string;
-    }
-
-    export const UserName = ({name}: Props) => {
-        
-        //varivel obtem o name e atribuie a Props
-        //const {name} = props 
-        return(
-            <h4>Meu nome é: { name }</h4>
-        )
-    }
-
-  UserInfo.tsx
-    import { UserAge } from "./UserAge"
-    import { UserAvatar } from "./UserAvatar"
-    import { UserEmail } from "./UserEmail"
-    import { UserName } from "./UserName"
-    import { UserRoles } from "./UserRoles"
-
-    /* manda as propriedades para as props de cada componente
-    export const UserInfo = () => {
-        return(
-            //<Fragment> or <> para englobar os outros componentes
-            <> 
-                <UserAvatar src="https://www.shutterstock.com/editorial/image-editorial/N7T0M132OeTekf20MTI2MA==/teletubbies---tinky-winky-440nw-5346790bb.jpg"/>
-                <UserName name="tinki winki"/>
-                <UserEmail email="email@email.com"/>
-                <UserAge age={28}/>
-                <UserRoles roles={ [{id: 1, title: 'CEO'}] }/>
-            </>
-        )
-    }*/
-
-    //cria props no UserInfo para enviar para App.tsx - Agora enviaremos as propriedades pelo App.tsx
-    type Props = {
-        name: string;
-        email: string;
-        age: number;
-        avatar: string;
-        roles: {id: number, title: string}[]
-    }
-
-    export const UserInfo = (props: Props) => {
-        return(
-            //<Fragment> or <> para englobar os outros componentes
-            <> 
-                <UserAvatar src={props.avatar} />
-                <UserName name={props.name}/>
-                <UserEmail email={props.email} />
-                <UserAge age={props.age} />
-                <UserRoles roles={props.roles} />
-            </>
-        )
-    }
-
-    // A função só exporta um componente por vez, por isso usamos o fragment
-    // Com o fragment podemos encapsular componentes dentro de um componente pai
-
-  App.tsx
-
-    import { UserInfo } from "./components/UserInfo";
-
-    const App = () => {
-      //Envia na props/atributos as informações que terá nos componentes
-      return (
-        <div>
-          <h1>
-            Meu primeiro componente de usuário
-          </h1>
-          <UserInfo 
-            avatar="https://www.shutterstock.com/editorial/image-editorial/N7T0M132OeTekf20MTI2MA==/teletubbies---tinky-winky-440nw-5346790bb.jpg"
-            name="tinki winki"
-            age={28}
-            email="tinki@email.com"
-            roles={ [{id: 1, title: "CEO"}] }
-          />
-
-    <UserInfo 
-            avatar="https://i.pinimg.com/736x/79/50/cd/7950cd8a23edec191c32de7bd7645105.jpg"
-            name="gypsy"
-            age={20}
-            email="gypsy@email.com"
-            roles={ [{id: 2, title: "CTO"}] }
-          />
-        </div>
+  /* manda as propriedades para as props de cada componente
+  export const UserInfo = () => {
+      return(
+          //<Fragment> or <> para englobar os outros componentes
+          <> 
+              <UserAvatar src="https://www.shutterstock.com/editorial/image-editorial/N7T0M132OeTekf20MTI2MA==/teletubbies---tinky-winky-440nw-5346790bb.jpg"/>
+              <UserName name="tinki winki"/>
+              <UserEmail email="email@email.com"/>
+              <UserAge age={28}/>
+              <UserRoles roles={ [{id: 1, title: 'CEO'}] }/>
+          </>
       )
+  }*/
+```
+```
+//cria props no UserInfo para enviar para App.tsx - Agora enviaremos as propriedades pelo App.tsx
+type Props = {
+    name: string;
+    email: string;
+    age: number;
+    avatar: string;
+    roles: {id: number, title: string}[]
+}
 
-    }
+export const UserInfo = (props: Props) => {
+    return(
+        //<Fragment> or <> para englobar os outros componentes
+        <> 
+            <UserAvatar src={props.avatar} />
+            <UserName name={props.name}/>
+            <UserEmail email={props.email} />
+            <UserAge age={props.age} />
+            <UserRoles roles={props.roles} />
+        </>
+    )
+}
 
-    export default App;
+// A função só exporta um componente por vez, por isso usamos o fragment
+// Com o fragment podemos encapsular componentes dentro de um componente pai
+```
+```
+App.tsx
 
--- aula 23 Inserindo um default em props --
+  import { UserInfo } from "./components/UserInfo";
+
+  const App = () => {
+    //Envia na props/atributos as informações que terá nos componentes
+    return (
+      <div>
+        <h1>
+          Meu primeiro componente de usuário
+        </h1>
+        <UserInfo 
+          avatar="https://www.shutterstock.com/editorial/image-editorial/N7T0M132OeTekf20MTI2MA==/teletubbies---tinky-winky-440nw-5346790bb.jpg"
+          name="tinki winki"
+          age={28}
+          email="tinki@email.com"
+          roles={ [{id: 1, title: "CEO"}] }
+        />
+
+  <UserInfo 
+          avatar="https://i.pinimg.com/736x/79/50/cd/7950cd8a23edec191c32de7bd7645105.jpg"
+          name="gypsy"
+          age={20}
+          email="gypsy@email.com"
+          roles={ [{id: 2, title: "CTO"}] }
+        />
+      </div>
+    )
+
+  }
+
+  export default App;
+```
+
+## Aula 23 Inserindo um default em props 
 
   USerInfo.tsx
     import { UserAge } from "./UserAge"
