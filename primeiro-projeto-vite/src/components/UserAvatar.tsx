@@ -1,11 +1,15 @@
-export const UserAvatar = () => {
+type Props = {
+    src: string,
+}
+
+export const UserAvatar = ({src}:Props) => {
     return(
-        <>
-           <img 
-            src="https://picsum.photos/seed/picsum/200/300" 
-            alt="Imagem avatar" 
-            onClick={() => alert('clicou')}
-            />
-        </>
+        <img 
+        src={src}
+        alt="Imagem avatar" 
+        onClick={() => alert('clicou')}
+        /> 
     )
 }
+
+//https://picsum.photos/seed/picsum/200/300

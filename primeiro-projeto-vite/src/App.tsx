@@ -1,19 +1,13 @@
 import { UserInfo } from "./components/UserInfo";
 
 const App = () => {
-  const isLogged = true;
-
-  //se nao esta logado o return interrompe o resto do código
-  if(!isLogged) {
-    return;
-  }
-
+  //repetir o mesmo componente igual, porem queremos passar cada info para cada componente
   return(
     <div>
-      <h1>
-        {isLogged ? "Logado" : "Não está logado"}
-      </h1>
-      {isLogged && <UserInfo/>}
+      <h1>Perfil</h1>
+      <UserInfo/>
+      <UserInfo/>
+      <UserInfo/>
     </div>
   )
   
