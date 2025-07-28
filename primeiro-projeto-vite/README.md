@@ -35,7 +35,7 @@ Rodar o projeto:
 
 ## Seção 4
 
-### Aula 14 - Outras formas de criar componentes 
+### Aula 13 - Outras formas de criar componentes 
 
 #### Com variável
 No app.tsx
@@ -88,7 +88,7 @@ class App extends React.Component{
 
 > usando useEffect e useState, monitora quando o componente nasce (renderiza) e morre ('desrenderizado')
 
-### Aula 15 - Importando e exportando componentes
+### Aula 14 - Importando e exportando componentes
 
 > Export component por defaulf em linha:
 
@@ -167,7 +167,7 @@ const App = () => {
 export default App;
 ```
 
-### Aula 16 - Como organizar vários componentes
+### Aula 15 - Como organizar vários componentes
 
 Cria os componente dentro de uma pasta 
   
@@ -224,7 +224,7 @@ const App = () => {
 export default App;
 ```
 
-### Aula 17 - Regras gerais do JSX 
+### Aula 16 - Regras gerais do JSX 
 
 ```
 export const UserAvatar = () => {
@@ -239,7 +239,7 @@ export const UserAvatar = () => {
 
 ```
 
-### Aula 18 - JSX variáveis funções e objetos
+### Aula 17 - JSX variáveis funções e objetos
 
 ```
 export const UserName = () => {
@@ -266,7 +266,7 @@ export const UserName = () => {
   )
 }
 ```
-### Aula 19 JSX Renderização Condicional
+### Aula 18 JSX Renderização Condicional
 
 Em App.tsx
 ```
@@ -338,7 +338,7 @@ const App = () => {
 export default App;
 ```
 
-### Aula 20 JSX Renderizando listas
+### Aula 19 JSX Renderizando listas
 
 ```
 export const UserRoles = () => {
@@ -394,7 +394,7 @@ export const UserInfo = () => {
 }
 ```
 
-### Aula 21 JSX Filtrando listas 
+### Aula 20 JSX Filtrando listas 
 ```
 export const UserRoles = () => {
 const roles = [
@@ -442,11 +442,10 @@ return(
 )
 }
 ```
-## Aula 22 Passando props para um componente 
+## Aula 21 Passando props para um componente 
 
 ```
 UserAge.tsx
-
   type Props = {
     age: number
   }
@@ -456,9 +455,9 @@ UserAge.tsx
       )
   }
 ```
+
 ```
 UserAvatar.tsx
-
   type Props = {
     src: string
   }
@@ -475,7 +474,6 @@ UserAvatar.tsx
 
 ```
 UserEmail.tsx
-
   type Props = {
     email: string
   }
@@ -488,7 +486,6 @@ UserEmail.tsx
 ```
 ```
 UserRoles.tsx
-
   type Props = {
     roles: {id: number, title: string}[]
   }
@@ -503,7 +500,6 @@ UserRoles.tsx
           </ul>
       )
   }
-
 ```
 ```
 UserName.tsx
@@ -539,7 +535,7 @@ type Props = {
 
 export const UserName = ({name}: Props) => {
     
-    //varivel obtem o name e atribuie a Props
+    //variável obtém o name e atributo a Props
     //const {name} = props 
     return(
         <h4>Meu nome é: { name }</h4>
@@ -569,7 +565,8 @@ UserInfo.tsx
   }*/
 ```
 ```
-//cria props no UserInfo para enviar para App.tsx - Agora enviaremos as propriedades pelo App.tsx
+// Cria props no UserInfo para enviar para App.tsx -> Agora enviaremos as propriedades pelo App.tsx
+
 type Props = {
     name: string;
     email: string;
@@ -594,6 +591,7 @@ export const UserInfo = (props: Props) => {
 // A função só exporta um componente por vez, por isso usamos o fragment
 // Com o fragment podemos encapsular componentes dentro de um componente pai
 ```
+
 ```
 App.tsx
 
@@ -614,13 +612,14 @@ App.tsx
           roles={ [{id: 1, title: "CEO"}] }
         />
 
-  <UserInfo 
+        <UserInfo 
           avatar="https://i.pinimg.com/736x/79/50/cd/7950cd8a23edec191c32de7bd7645105.jpg"
           name="gypsy"
           age={20}
           email="gypsy@email.com"
           roles={ [{id: 2, title: "CTO"}] }
         />
+
       </div>
     )
 
@@ -629,147 +628,158 @@ App.tsx
   export default App;
 ```
 
-## Aula 23 Inserindo um default em props 
+## Aula 22 Inserindo um default em props 
 
-  USerInfo.tsx
-    import { UserAge } from "./UserAge"
-    import { UserAvatar } from "./UserAvatar"
-    import { UserEmail } from "./UserEmail"
-    import { UserName } from "./UserName"
-    import { UserRoles } from "./UserRoles"
+UserInfo.tsx
 
-    type Props = {
-        name: string;
-        email: string;
-        age: number;
-        avatar?: string;
-        roles: {id: number, title: string}[]
-    }
+```
+import { UserAge } from "./UserAge"
+import { UserAvatar } from "./UserAvatar"
+import { UserEmail } from "./UserEmail"
+import { UserName } from "./UserName"
+import { UserRoles } from "./UserRoles"
 
-    export const UserInfo = ( {name, email, age, roles, avatar = "https://www.shutterstock.com/editorial/image-editorial/N7T0M132OeTekf20MTI2MA==/teletubbies---tinky-winky-440nw-5346790bb.jpg"} : Props) => {
-        return(
-            <> 
-                <UserAvatar src={avatar} />
-                <UserName name={name}/>
-                <UserEmail email={email} />
-                <UserAge age={age} />
-                <UserRoles roles={roles} />
-            </>
-        )
-    }
+type Props = {
+    name: string;
+    email: string;
+    age: number;
+    avatar?: string;
+    roles: {id: number, title: string}[]
+}
 
-  App.tsx
+export const UserInfo = ( {name, email, age, roles, avatar = "https://www.shutterstock.com/editorial/image-editorial/N7T0M132OeTekf20MTI2MA==/teletubbies---tinky-winky-440nw-5346790bb.jpg"} : Props) => {
+    return(
+        <> 
+            <UserAvatar src={avatar} />
+            <UserName name={name}/>
+            <UserEmail email={email} />
+            <UserAge age={age} />
+            <UserRoles roles={roles} />
+        </>
+    )
+}
+```
 
-    import { UserInfo } from "./components/UserInfo";
+App.tsx
 
-    const App = () => {
-      //Envia na props/atributos as informações que terá nos componentes
-      return (
-        <div>
-          <h1>
-            Meu primeiro componente de usuário
-          </h1>
+```
+import { UserInfo } from "./components/UserInfo";
+
+const App = () => {
+  //Envia na props/atributos as informações que terá nos componentes
+  return (
+    <div>
+      <h1>
+        Meu primeiro componente de usuário
+      </h1>
+      
+      <UserInfo 
+        name="tinki winki"
+        age={28}
+        email="tinki@email.com"
+        roles={ [{id: 1, title: "CEO"}] }
+      />
+
+      <UserInfo 
+        avatar="https://i.pinimg.com/736x/79/50/cd/7950cd8a23edec191c32de7bd7645105.jpg"
+        name="gypsy"
+        age={20}
+        email="gypsy@email.com"
+        roles={ [{id: 2, title: "CTO"}] }
+      />
+    </div>
+  )
+
+}
+
+export default App;
+
+```
+
+## Aula 23 Prop children do componente 
+
+Card.tsx
+
+```
+import { ReactElement, ReactNode } from "react"
+
+type Props = {
+    //Tipo como um elemento react
+    //children: ReactElement
+
+    // Tipo como vários tipos react, não precisa do fragment no app.tsx
+    //children: ReactNode
+
+    // para usar elemento vazio ou < Card /> no app.tsx
+    children?: ReactNode
+
+    // retorna um JSX somente, array para receber mais de um no app.tsx -> não recomendado
+    //children: JSX.Element[]
+}
+
+export const Card = ({ children } : Props) => {
+    return (
+        <div style={{border: '1px solid red', width: '100vw', height: '100vh'}}>
+            { children }
+        </div>
+    )
+}
+```
+
+App.tsx
+
+```
+import { Card } from "./components/Card";
+import { UserInfo } from "./components/UserInfo";
+import { UserName } from "./components/UserName";
+
+/*
+const App = () => {
+  return (
+    <div>
+        <Card>
           
-          <UserInfo 
-            name="tinki winki"
-            age={28}
-            email="tinki@email.com"
-            roles={ [{id: 1, title: "CEO"}] }
-          />
-
-          <UserInfo 
-            avatar="https://i.pinimg.com/736x/79/50/cd/7950cd8a23edec191c32de7bd7645105.jpg"
-            name="gypsy"
-            age={20}
-            email="gypsy@email.com"
-            roles={ [{id: 2, title: "CTO"}] }
-          />
-        </div>
-      )
-
-    }
-
-    export default App;
-
--- aula 24 Prop children do componente --
-
-  Card.tsx
-    import { ReactElement, ReactNode } from "react"
-
-    type Props = {
-        //Tipo como um elemento react
-        //children: ReactElement
-
-        // Tipo como vários tipos react, não precisa do fragment no app.tsx
-        //children: ReactNode
-
-        // para usar elemento vazio ou < Card /> no app.tsx
-        children?: ReactNode
-
-        // retorna um JSX somente, array para receber mais de um no app.tsx -> não recomendado
-        //children: JSX.Element[]
-    }
-
-    export const Card = ({ children } : Props) => {
-        return (
-            <div style={{border: '1px solid red', width: '100vw', height: '100vh'}}>
-                { children }
-            </div>
-        )
-    }
-
-  App.tsx
-
-    import { Card } from "./components/Card";
-    import { UserInfo } from "./components/UserInfo";
-    import { UserName } from "./components/UserName";
-
-    /*
-    const App = () => {
-      return (
-        <div>
-            <Card>
-              
-                <UserName
-                  name="Andressa"
-                />
-                <h1>Texto</h1>
-                <h1>Texto</h1>
-                <h1>Texto</h1>
-                <h1>Texto</h1>
-              
-            </Card>
-        </div>
-      )
-
-    }
-    */
-
-    /*
-    const App = () => {
-      return (
-        <div>
-            <Card 
-              children={<div>Div Prop</div>}
+            <UserName
+              name="Andressa"
             />
-        </div>
-      )
+            <h1>Texto</h1>
+            <h1>Texto</h1>
+            <h1>Texto</h1>
+            <h1>Texto</h1>
+          
+        </Card>
+    </div>
+  )
 
-    }
-    */
+}
+*/
 
-    const App = () => {
-      return (
-        <div>
-            <Card>
-                <div>Div Children</div>          
-            </Card>
-        </div>
-      )
+/*
+const App = () => {
+  return (
+    <div>
+        <Card 
+          children={<div>Div Prop</div>}
+        />
+    </div>
+  )
 
-    }
+}
+*/
 
-    export default App;
+const App = () => {
+  return (
+    <div>
+        <Card>
+            <div>Div Children</div>          
+        </Card>
+    </div>
+  )
+
+}
+
+export default App;
+```
 
 -- aula 25 O que sao componentes puros e impuros --
 

@@ -8,18 +8,18 @@ type Props = {
     name:string,
     email:string,
     age:number,
-    avatar:string,
+    avatar?:string,
     roles: {id:number, title:string}[]
 }
 
-export const UserInfo = (props:Props) => {
+export const UserInfo = ({name, email, age, roles, avatar= 'https://picsum.photos/seed/picsum/200/300'}:Props) => {
     return(
         <>
-            <UserAvatar src={props.avatar} />
-            <UserName name={props.name}/>
-            <UserEmail email={props.email}/>
-            <UserAge age={props.age}/>
-            <UserRoles roles={props.roles}/>
+            <UserAvatar src={avatar} />
+            <UserName name={name}/>
+            <UserEmail email={email}/>
+            <UserAge age={age}/>
+            <UserRoles roles={roles}/>
         </>
     )
 }
